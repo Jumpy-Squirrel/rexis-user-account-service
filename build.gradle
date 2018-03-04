@@ -36,6 +36,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     /** see https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/ */
     compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springBootVersion}")
+    compile('org.springframework.security:spring-security-jwt')
     compile('org.springframework.boot:spring-boot-starter-web')
     // compile('org.liquibase:liquibase-core')
     // runtime('mysql:mysql-connector-java')
