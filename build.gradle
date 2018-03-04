@@ -1,12 +1,15 @@
 buildscript {
     ext {
         springBootVersion = '2.0.0.RELEASE'
+        springCloudContractVerifierVersion = '2.0.0.M7'
     }
     repositories {
         mavenCentral()
+        maven { url "http://repo.spring.io/milestone" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springCloudContractVerifierVersion}")
     }
 }
 
@@ -16,6 +19,8 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
+apply plugin: 'groovy'
+apply plugin: 'spring-cloud-contract'
 
 group = 'info.rexis'
 version = '0.1.0-SNAPSHOT'
@@ -23,10 +28,17 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 configurations {
     providedRuntime
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudContractVerifierVersion}"
+    }
 }
 
 dependencies {
@@ -45,4 +57,13 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
     // testRuntime('com.h2database:h2')
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.6'
+    testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 }
+
+contracts {
+    baseClassForTests = 'info.rexis.uas.Oauth2Base'
+    testMode = 'Explicit'
+}
+
+check.dependsOn generateContractTests
