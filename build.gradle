@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
@@ -33,6 +34,8 @@ dependencies {
     // compile('org.springframework.boot:spring-boot-starter-data-jpa')
     // compile('org.springframework.boot:spring-boot-starter-mail')
     compile('org.springframework.boot:spring-boot-starter-security')
+    /** see https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/ */
+    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springBootVersion}")
     compile('org.springframework.boot:spring-boot-starter-web')
     // compile('org.liquibase:liquibase-core')
     // runtime('mysql:mysql-connector-java')
